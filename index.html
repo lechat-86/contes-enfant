@@ -2,585 +2,63 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conte Enfant — Le JT des Petits</title>
+<title>Test API Agnes</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fdf8f0;color:#3d2b1f;padding:1.2rem 1rem 14rem;font-size:15px;line-height:1.6;max-width:900px;margin:0 auto}
-h1{font-size:1.7rem;text-align:center;margin-bottom:.3rem;background:linear-gradient(135deg,#e8a87c,#85cdca,#c5b7d9);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.sub{text-align:center;color:#8a7060;font-size:.85rem;font-style:italic;margin-bottom:1rem}
-.toast{position:fixed;top:1rem;left:50%;transform:translateX(-50%) translateY(-120px);background:#fff;color:#3d2b1f;border:2px solid #e8a87c;border-radius:8px;padding:.8rem 1.4rem;font-size:.85rem;box-shadow:0 8px 32px rgba(61,43,31,.15);z-index:1000;opacity:0;transition:all .35s;max-width:90vw}
-.toast.visible{transform:translateX(-50%) translateY(0);opacity:1}
-.panel{background:#fff;border:1px solid #f0dcc0;border-radius:8px;padding:1rem;margin-bottom:1rem}
-.panel.ok{border-left:4px solid #6ab88a}
-textarea,input[type=password]{width:100%;padding:.8rem;border:1px solid #f0dcc0;border-radius:8px;background:#fff5e6;font-family:monospace;font-size:.78rem;margin-bottom:.6rem;color:#3d2b1f}
-textarea{min-height:70px;resize:vertical;font-family:inherit;font-size:.9rem}
-.btn{width:100%;padding:.85rem;border:2px solid #f0dcc0;border-radius:8px;background:#fff5e6;color:#3d2b1f;font-size:.9rem;font-weight:700;cursor:pointer;margin-bottom:.6rem}
-.btn:hover:not(:disabled){background:#ffe8cc;border-color:#e8a87c}
-.btn:disabled{opacity:.4;cursor:not-allowed}
-.btn-primary{border-color:#e8a87c;background:linear-gradient(135deg,rgba(232,168,124,.25),rgba(133,205,202,.2));font-size:1rem;padding:1.2rem}
-.status{font-size:.75rem;padding:.6rem;background:#fff5e6;border-radius:8px;color:#8a7060;margin-bottom:.5rem}
-.status.ok{background:rgba(106,184,138,.1);color:#6ab88a}
-.hint{font-size:.72rem;color:#8a7060;margin-top:.5rem}
-.hint a{color:#e8a87c}
-.section{background:#fff;border:1px solid #f0dcc0;border-radius:8px;margin-bottom:1rem;overflow:hidden}
-.section.hidden{display:none}
-.sh{padding:1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:.85rem;text-transform:uppercase;letter-spacing:.1em}
-.sh:hover{background:#fff5e6}
-.sb{max-height:0;overflow:hidden;transition:max-height .4s}
-.section.open .sb{max-height:20000px}
-.sc{padding:0 1rem 1rem}
-.view{background:#fff5e6;border:1px solid #f0dcc0;border-radius:8px;padding:1rem;margin-top:.6rem;font-size:.85rem;line-height:1.7;max-height:420px;overflow-y:auto}
-.news-row{padding:.6rem;border-bottom:1px dashed #f0dcc0}
-.news-row:last-child{border-bottom:none}
-.nidx{display:inline-block;min-width:28px;color:#e8a87c;font-weight:700}
-.nsrc{font-size:.68rem;color:#b8a090;margin-top:.2rem;margin-left:28px}
-.script-scene{margin-bottom:1rem;padding-left:.9rem;border-left:3px solid #f0dcc0}
-.sc-head{font-size:.78rem;color:#e8a87c;font-weight:700;margin-bottom:.3rem}
-.sc-line{margin-bottom:.25rem;font-size:.83rem}
-.sc-label{display:inline-block;min-width:78px;color:#b8a090;font-size:.7rem;text-transform:uppercase}
-.sc-dialogue{color:#a07050;font-style:italic;background:rgba(232,168,124,.08);padding:.3rem .6rem;border-radius:4px;margin-top:.3rem}
-.videos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:.8rem}
-.card{background:#fff5e6;border:1px solid #f0dcc0;border-radius:8px;overflow:hidden}
-.card.done{border-color:#6ab88a}
-.card.error{border-color:#d97a6a}
-.card-header{padding:.5rem .7rem;font-size:.7rem;font-family:monospace;display:flex;justify-content:space-between;border-bottom:1px solid #f0dcc0}
-.card-body{padding:.7rem}
-.card-body video{width:100%;border-radius:6px;background:#000;display:block}
-.placeholder{width:100%;aspect-ratio:16/9;background:#ffe8cc;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#b8a090;font-size:.7rem;font-family:monospace;flex-direction:column;gap:.5rem}
-.spinner{width:16px;height:16px;border:2px solid rgba(232,168,124,.2);border-top-color:#e8a87c;border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.status-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:2px solid #e8a87c;padding:.7rem 1rem;font-size:.78rem;font-family:monospace;display:flex;align-items:center;gap:.6rem;transform:translateY(100%);transition:transform .35s;z-index:150;box-shadow:0 -4px 20px rgba(61,43,31,.1)}
-.status-bar.visible{transform:translateY(0)}
-.voice-toggle{display:flex;align-items:center;gap:.5rem;margin-top:.6rem;font-size:.75rem;color:#8a7060}
-.voice-toggle input{width:auto;margin:0;accent-color:#e8a87c}
-@media(max-width:480px){h1{font-size:1.4rem}.videos-grid{grid-template-columns:1fr}}
+body { font-family: sans-serif; padding: 20px; background: #fdf8f0; text-align: center; }
+button { padding: 15px; font-size: 18px; background: #e8a87c; color: white; border: none; border-radius: 8px; cursor: pointer; margin-top: 20px; }
+#log { margin-top: 20px; font-family: monospace; white-space: pre-wrap; text-align: left; background: #fff; padding: 10px; border-radius: 8px; }
+#img-container img { width: 100%; max-width: 400px; border-radius: 8px; margin-top: 20px; border: 2px solid #ccc; }
 </style>
 </head>
 <body>
 
-<h1>🌈 Conte Enfant</h1>
-<p class="sub">Le JT des Petits — actualités douces pour enfants sages</p>
+<h1>Test de l'API</h1>
+<p>Colle ta clé API :</p>
+<input type="text" id="key" placeholder="sk-..." style="padding: 10px; width: 80%; max-width: 400px;">
+<br>
+<button onclick="testImage()">Tester la génération d'image</button>
 
-<div class="panel" id="api-panel">
-<label style="display:block;font-size:.72rem;color:#8a7060;margin-bottom:.5rem;text-transform:uppercase;font-weight:700;">🔑 Clés API Agnes — une par ligne</label>
-<textarea id="api-keys-input" placeholder="sk-xxxxx&#10;sk-yyyyy" rows="3" spellcheck="false"></textarea>
-<button class="btn" id="api-save-btn">Enregistrer les clés</button>
-<div class="status" id="api-status-line">Aucune clé API enregistrée</div>
-<div class="hint">Clés sur <a href="https://platform.agnes-ai.com" target="_blank">platform.agnes-ai.com</a></div>
-</div>
-
-<button class="btn btn-primary" id="launch-btn" disabled>▶ Lancer le JT des Petits</button>
-<button class="btn" id="stop-btn" style="display:none">⏹ Arrêter</button>
-
-<div class="section hidden" id="section-news">
-<div class="sh" data-toggle="section-news">📰 Actualités du jour <span id="news-badge">—</span></div>
-<div class="sb"><div class="sc"><div class="view" id="news-view">…</div></div></div>
-</div>
-
-<div class="section hidden" id="section-script">
-<div class="sh" data-toggle="section-script">📜 Scénario du conte <span id="script-badge">—</span></div>
-<div class="sb"><div class="sc"><div class="view" id="script-view">…</div></div></div>
-</div>
-
-<div class="section hidden" id="section-videos">
-<div class="sh" data-toggle="section-videos">🎞️ Séquences vidéo <span id="videos-count">0</span></div>
-<div class="sb"><div class="sc"><div class="videos-grid" id="videos-grid"></div></div></div>
-</div>
-
-<div class="section hidden" id="section-player">
-<div class="sh" data-toggle="section-player">▶ Diffusion du conte</div>
-<div class="sb"><div class="sc">
-<button class="btn" id="play-film-btn" disabled>▶ Diffuser le conte</button>
-<div class="voice-toggle">
-<input type="checkbox" id="voice-toggle" checked>
-<label for="voice-toggle">🔊 Voix enfantine française</label>
-</div>
-</div></div>
-</div>
-
-<div class="status-bar" id="status-bar"><div class="spinner"></div><span id="status-text">Préparation…</span></div>
-<div class="toast" id="toast"><span id="toast-text">Message</span></div>
+<div id="log"></div>
+<div id="img-container"></div>
 
 <script>
-const API_BASE='https://apihub.agnes-ai.com/v1';
-const POLL_BASE='https://apihub.agnes-ai.com/agnesapi';
-const MODEL_TEXT='agnes-2.5-flash';
-const MODEL_IMAGE='agnes-image-2.1-flash';
-const MODEL_VIDEO='agnes-video-v2.0';
-const FRAME_RATE=24;
-const KIDS_QUERY='https://news.google.com/rss/search?q=enfance+OR+%C3%A9cole+OR+animaux+OR+espace+OR+nature+OR+d%C3%A9couverte&hl=fr&gl=FR&ceid=FR:fr';
-const API_KEYS_STORAGE='conte_enfant_keys_v1';
-const SCENE_COUNT=6;
-const REPORTAGE_COUNT=4;
-const SCENE_FRAMES=145;
+async function testImage() {
+const key = document.getElementById('key').value.trim();
+const log = document.getElementById('log');
+log.textContent = "Envoi de la requête...\n";
 
-const PALETTES=[
-{label:'Rose poudré & Menthe',colors:['#F4C2C2','#A8D8B9','#E5B95A','#F5F0E1','#7B9FB0']},
-{label:'Lavande & Ocre',colors:['#C5B7D9','#E5B95A','#F4A6A6','#F5EFE0','#7A8B7E']},
-{label:'Sauge & Blush',colors:['#B8C9A8','#F1C6C6','#E8B44A','#F5F0E1','#5B6E7A']}
-];
-
-const state={keyPool:[],isRunning:false,stopRequested:false,newsItems:[],selectedNews:[],script:null,palette:null,videos:[],isPlayingFilm:false,voiceEnabled:true,playRAF:null};
-
-const $=id=>document.getElementById(id);
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let toastTimeout=null;
-function showToast(msg,type='success'){
-const t=$('toast');t.textContent=msg;t.classList.add('visible');
-if(toastTimeout)clearTimeout(toastTimeout);
-toastTimeout=setTimeout(()=>t.classList.remove('visible'),2800);
-}
-function setStatus(txt){const b=$('status-bar');if(txt){b.classList.add('visible');$('status-text').textContent=txt}else{b.classList.remove('visible')}}
-
-function getKeys(){try{return JSON.parse(localStorage.getItem(API_KEYS_STORAGE)||'[]')}catch(e){return[]}}
-function saveKeysToLS(keys){try{localStorage.setItem(API_KEYS_STORAGE,JSON.stringify(keys))}catch(e){}}
-function refreshKeyPool(){
-const stored=getKeys();
-const old=state.keyPool;
-state.keyPool=stored.map(k=>old.find(p=>p.key===k)||{key:k,lastUsed:0,cooldownUntil:0,active:true,errorCount:0});
-}
-function hasKey(){return state.keyPool.some(k=>k.active)}
-function getReadyKey(){
-const now=Date.now();
-const active=state.keyPool.filter(k=>k.active&&(!k.cooldownUntil||k.cooldownUntil<=now));
-if(!active.length)return null;
-active.sort((a,b)=>a.lastUsed-b.lastUsed);
-return active[0];
-}
-function updateApiPanel(){
-refreshKeyPool();
-const n=state.keyPool.length;
-$('api-status-line').textContent=n>0?n+' clé(s) active(s)':'Aucune clé API enregistrée';
-$('api-status-line').classList.toggle('ok',n>0);
-$('api-panel').classList.toggle('ok',n>0);
-if(n>0)$('api-keys-input').value=state.keyPool.map(k=>k.key).join('\n');
-updateButtons();
-}
-function saveKeys(){
-const raw=$('api-keys-input').value;
-const valid=raw.split('\n').map(l=>l.trim()).filter(l=>l.startsWith('sk-'));
-saveKeysToLS(valid);
-updateApiPanel();
-showToast(valid.length+' clé(s) enregistrée(s)',valid.length?'success':'warn');
-}
-function updateButtons(){
-const has=hasKey();
-$('launch-btn').disabled=!has||state.isRunning;
-$('launch-btn').textContent=!has?'🔑 Ajoutez une clé API':(state.isRunning?'⏳ Conte en cours…':'▶ Lancer le JT des Petits');
-$('stop-btn').style.display=state.isRunning?'block':'none';
-const hasVids=state.videos.filter(v=>v.status==='done').length>0;
-$('play-film-btn').disabled=!hasVids||state.isPlayingFilm;
-}
-
-async function apiFetch(url,opts){
-opts=opts||{};
-for(let attempt=0;attempt<5;attempt++){
-if(state.stopRequested)throw new Error('Arrêt');
-const key=getReadyKey();
-if(!key)throw new Error('Aucune clé disponible');
-key.lastUsed=Date.now();
-const headers={...opts.headers,'Authorization':'Bearer '+key.key};
-try{
-const res=await fetch(url,{...opts,headers});
-if(res.ok){key.errorCount=0;return res}
-if(res.status===429){key.cooldownUntil=Date.now()+30000;await sleep(2000);continue}
-if([500,502,503,504,520].includes(res.status)){await sleep(3000);continue}
-const txt=await res.text();
-throw new Error('HTTP '+res.status+' — '+txt.slice(0,200));
-}catch(e){
-if(attempt===4)throw e;
-await sleep(2000);
-}
-}
-throw new Error('Échec API');
-}
-
-async function fetchNews(){
-const proxies=[
-'https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(KIDS_QUERY),
-'https://api.allorigins.win/raw?url='+encodeURIComponent(KIDS_QUERY)
-];
-for(const url of proxies){
-try{
-const res=await fetch(url);
-if(!res.ok)continue;
-const text=await res.text();
-if(url.includes('rss2json')){
-const data=JSON.parse(text);
-if(data.status==='ok'&&data.items){
-return data.items.map(it=>({title:it.title,source:it.author||'Google News'})).slice(0,20);
-}
-}else{
-const parser=new DOMParser();
-const xml=parser.parseFromString(text,'text/xml');
-const items=xml.querySelectorAll('item');
-const out=[];
-items.forEach((it,i)=>{if(i<20){const t=it.querySelector('title')?.textContent;if(t)out.push({title:t,source:it.querySelector('source')?.textContent||'Google News'})}});
-if(out.length)return out;
-}
-}catch(e){}
-}
-return [
-{title:'Un bébé panda roux est né dans un zoo français',source:'1jour1actu'},
-{title:'La NASA envoie un nouveau robot explorer Mars',source:'Mon Quotidien'},
-{title:'Des élèves plantent une forêt près de leur école',source:'Astrapi'},
-{title:'Une baleine bleue aperçue au large de la Bretagne',source:'1jour1actu'}
-];
-}
-
-async function generateImage(prompt){
-const body={model:MODEL_IMAGE,prompt,n:1,size:'1K',ratio:'16:9'};
-const res=await apiFetch(API_BASE+'/images/generations',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-const data=await res.json();
-const item=data.data&&data.data[0];
-if(!item)throw new Error('Pas d\'image');
-return item.url||('data:image/png;base64,'+item.b64_json);
-}
-
-async function createVideoTask(prompt,imageUrl){
-const body = {
-model: MODEL_VIDEO,
-prompt: prompt,
-num_frames: SCENE_FRAMES,
-frame_rate: FRAME_RATE,
-// On utilise le format exact attendu par le serveur Agnes
-extra_body: {
-image: [imageUrl, imageUrl], // L'image de départ et de fin
-mode: 'keyframes'
-}
-};
-
-const res = await apiFetch(API_BASE+'/videos', {
+try {
+const res = await fetch('https://apihub.agnes-ai.com/v1/images/generations', {
 method: 'POST',
-headers: {'Content-Type': 'application/json'},
-body: JSON.stringify(body)
+headers: {
+'Authorization': 'Bearer ' + key,
+'Content-Type': 'application/json'
+},
+body: JSON.stringify({
+model: 'agnes-image-2.1-flash',
+prompt: 'Un chaton mignon dans un décor pastel de conte de fées',
+n: 1,
+size: '1K',
+ratio: '16:9'
+})
 });
 
 const data = await res.json();
-const id = data.video_id || data.id || data.task_id;
-if(!id) throw new Error('Pas de video_id');
-return id;
+
+if (!res.ok) {
+log.textContent += "ERREUR : " + JSON.stringify(data, null, 2);
+return;
 }
 
-async function pollVideo(id,onProgress){
-let wait=60;
-while(wait>0){if(state.stopRequested)throw new Error('Arrêt');onProgress('Préparation — '+wait+'s');await sleep(1000);wait--}
-for(let i=0;i<100;i++){
-if(state.stopRequested)throw new Error('Arrêt');
-if(i>0){let w=10;while(w>0){if(state.stopRequested)throw new Error('Arrêt');onProgress('Création — '+w+'s');await sleep(1000);w--}}
-const url=POLL_BASE+'?video_id='+encodeURIComponent(id)+'&model_name='+encodeURIComponent(MODEL_VIDEO);
-try{
-const res=await apiFetch(url,{method:'GET'});
-const d=await res.json();
-const status=d.status||'unknown';
-const progress=d.progress||0;
-onProgress('Création — '+progress+'%');
-if(status==='completed'||status==='succeeded'||status==='done'){
-return d.metadata?.url||d.url||d.output?.url;
-}
-if(status==='failed'||status==='error')throw new Error('Échec');
-}catch(e){
-if(e.message==='Échec')throw e;
+log.textContent += "SUCCÈS ! L'image a été générée.\n";
+
+const imgUrl = data.data[0].url;
+document.getElementById('img-container').innerHTML = '<img src="' + imgUrl + '">';
+
+} catch (e) {
+log.textContent += "Erreur fatale : " + e.message;
 }
 }
-throw new Error('Timeout');
-}
-
-async function generateScript(news,palette){
-const newsBlock=news.map((n,i)=>(i+1)+'. « '+n.title+' »').join('\n');
-const paletteStr=palette.colors.join(', ');
-const prompt=[
-'Tu es scénariste d\'un CONTE POUR ENFANTS de 6 scènes (ouverture plateau + 4 reportages + conclusion plateau).',
-'',
-'SUJETS :',
-newsBlock,
-'',
-'PALETTE : '+palette.label+' → '+paletteStr,
-'',
-'PERSONNAGES : chatons conteurs avec CAPE pastel et CHAPEAU POINTU, tenant un LIVRE DE CONTES.',
-'Décors : conte de fées rétrofuturiste pastel (châteaux, forêts, nuages, étoiles).',
-'',
-'CHAQUE SCÈNE DOIT AVOIR un dialogue.line_fr EN FRANÇAIS (5-10 mots, doux).',
-'Scène 1 : "Bonjour les enfants, voici les nouvelles du jour !"',
-'Scène 6 : "Merci les enfants, à bientôt !"',
-'',
-'Retourne UNIQUEMENT ce JSON (une ligne) :',
-'{"title":"titre","logline":"résumé","presenter":{"name":"Luna","cat_face":"siamoise","cape":"rose","hat":"lavande"},"scenes":[{"scene_number":1,"type":"plateau","news_index":0,"character":{"name":"Luna"},"decor":"pastel studio","action":"speaks","dialogue":{"speaker":"Luna","line_fr":"Bonjour les enfants, voici les nouvelles du jour !"},"text_overlay_fr":"LE CONTE DES PETITS"},{"scene_number":2,"type":"reportage","news_index":1,"character":{"name":"Reporter 1"},"decor":"pastel forest","action":"speaks","dialogue":{"speaker":"Reporter 1","line_fr":"phrase douce"},"text_overlay_fr":"BANDEAU"},{"scene_number":3,"type":"reportage","news_index":2,"character":{"name":"Reporter 2"},"decor":"pastel castle","action":"speaks","dialogue":{"speaker":"Reporter 2","line_fr":"phrase douce"},"text_overlay_fr":"BANDEAU"},{"scene_number":4,"type":"reportage","news_index":3,"character":{"name":"Reporter 3"},"decor":"pastel space","action":"speaks","dialogue":{"speaker":"Reporter 3","line_fr":"phrase douce"},"text_overlay_fr":"BANDEAU"},{"scene_number":5,"type":"reportage","news_index":4,"character":{"name":"Reporter 4"},"decor":"pastel garden","action":"speaks","dialogue":{"speaker":"Reporter 4","line_fr":"phrase douce"},"text_overlay_fr":"BANDEAU"},{"scene_number":6,"type":"plateau","news_index":0,"character":{"name":"Luna"},"decor":"pastel studio","action":"speaks","dialogue":{"speaker":"Luna","line_fr":"Merci les enfants, à bientôt !"},"text_overlay_fr":"FIN"}]}'
-].join('\n');
-
-const body={model:MODEL_TEXT,messages:[{role:'system',content:'Tu réponds UNIQUEMENT en JSON strict, sans markdown.'},{role:'user',content:prompt}],temperature:0.7,max_tokens:4000};
-const res=await apiFetch(API_BASE+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-const data=await res.json();
-const content=data.choices?.[0]?.message?.content;
-if(!content)throw new Error('Pas de contenu');
-
-let parsed;
-try{parsed=JSON.parse(content)}catch(e){
-const m=content.match(/\{[\s\S]*\}/);
-if(m)parsed=JSON.parse(m[0]);
-}
-if(!parsed||!parsed.scenes)throw new Error('JSON invalide');
-
-while(parsed.scenes.length<6){
-parsed.scenes.push({
-scene_number:parsed.scenes.length+1,
-type:'plateau',
-character:{name:'Luna'},
-decor:'pastel studio',
-action:'speaks',
-dialogue:{speaker:'Luna',line_fr:'Voici notre conte.'}
-});
-}
-
-return parsed;
-}
-
-function buildVideoPrompt(scene,script,palette){
-const char=(scene.character&&scene.character.name)||'Luna';
-const decor=scene.decor||'pastel studio';
-const action=scene.action||'speaks to camera';
-const line=(scene.dialogue&&scene.dialogue.line_fr)||'';
-return [
-'A PASTEL FAIRY-TALE CHILDREN\'S TV SHOW, shot on 35mm film, gentle and magical.',
-'Perfect bilateral symmetry, dead-center framing, planimetric staging, pastel palette.',
-'PALETTE : '+palette.colors.join(', '),
-'CHARACTER : '+char+' — a cute kawaii humanoid kitten with a pastel cape and a pointed wizard hat, holding a storybook.',
-'DECOR : '+decor,
-'ACTION : '+action,
-line?('SPOKEN LINE (French, to camera) : "'+line+'"'):'',
-'Hard cuts between 3 shots: wide symmetric → medium → close-up.',
-'35mm film grain, warm halation, dreamy pastel tones, no text, no watermarks.'
-].join('\n');
-}
-
-function renderNews(){
-const view=$('news-view');
-view.innerHTML=state.selectedNews.map((n,i)=>'<div class="news-row"><span class="nidx">'+(i+1)+'.</span>'+esc(n.title)+'<div class="nsrc">'+esc(n.source||'')+'</div></div>').join('');
-$('news-badge').textContent=state.selectedNews.length+' sujets';
-}
-function renderScript(){
-const s=state.script;
-if(!s)return;
-let html='<div style="font-size:1.05rem;font-weight:700;color:#e8a87c;margin-bottom:.3rem;">📖 '+esc(s.title||'')+'</div>';
-html+='<div style="font-style:italic;color:#8a7060;margin-bottom:1rem;font-size:.82rem;">'+esc(s.logline||'')+'</div>';
-(s.scenes||[]).forEach((sc,i)=>{
-html+='<div class="script-scene"><div class="sc-head">🎬 Scène '+(sc.scene_number||i+1)+' · '+esc((sc.type||'').toUpperCase())+'</div>';
-if(sc.decor)html+='<div class="sc-line"><span class="sc-label">Décor</span>'+esc(sc.decor)+'</div>';
-if(sc.dialogue&&sc.dialogue.line_fr)html+='<div class="sc-dialogue">🔊 '+esc(sc.dialogue.speaker||'')+' — « '+esc(sc.dialogue.line_fr)+' »</div>';
-html+='</div>';
-});
-$('script-view').innerHTML=html;
-$('script-badge').textContent=s.scenes.length+' scènes';
-}
-function renderVideos(){
-const grid=$('videos-grid');
-while(grid.children.length>state.videos.length)grid.removeChild(grid.lastChild);
-for(let i=grid.children.length;i<state.videos.length;i++){
-const c=document.createElement('div');
-c.className='card';
-c.innerHTML='<div class="card-header"><span>🎬 Scène '+(i+1)+'</span><span class="status-icon"></span></div><div class="card-body"></div>';
-grid.appendChild(c);
-}
-state.videos.forEach((v,i)=>{
-const c=grid.children[i];
-const h=c.querySelector('.card-header');
-const body=c.querySelector('.card-body');
-const icon=c.querySelector('.status-icon');
-c.className='card '+(v.status==='done'?'done':v.status==='error'?'error':v.status==='loading'?'loading':'');
-if(v.status==='done'&&v.url){
-icon.innerHTML='<span style="color:#6ab88a">✓</span>';
-if(!body.querySelector('video')){
-body.innerHTML='';
-const vid=document.createElement('video');
-vid.src=v.url;vid.controls=true;vid.preload='metadata';vid.setAttribute('playsinline','');
-body.appendChild(vid);
-}
-}else if(v.status==='error'){
-icon.innerHTML='<span style="color:#d97a6a">✕</span>';
-body.innerHTML='<div class="placeholder" style="color:#d97a6a">Erreur</div>';
-}else{
-icon.innerHTML='<div class="spinner"></div>';
-const p=v.progress||'En attente…';
-if(!body.querySelector('.placeholder'))body.innerHTML='<div class="placeholder"><div class="spinner"></div><span>'+esc(p)+'</span></div>';
-else body.querySelector('.placeholder span').textContent=p;
-}
-});
-$('videos-count').textContent=state.videos.filter(v=>v.status==='done').length+'/'+state.videos.length;
-}
-
-async function runConte(){
-if(state.isRunning)return;
-if(!hasKey()){showToast('Ajoutez une clé API','error');return}
-state.isRunning=true;state.stopRequested=false;
-state.newsItems=[];state.selectedNews=[];state.script=null;state.videos=[];
-state.palette=PALETTES[Math.floor(Math.random()*PALETTES.length)];
-['section-news','section-script','section-videos','section-player'].forEach(id=>$(id).classList.add('hidden'));
-$('videos-grid').innerHTML='';
-updateButtons();
-showToast('Conte lancé !','success');
-
-try{
-setStatus('Étape 1/3 — Chargement des actualités…');
-state.newsItems=await fetchNews();
-state.selectedNews=state.newsItems.slice(0,REPORTAGE_COUNT);
-renderNews();
-$('section-news').classList.remove('hidden');$('section-news').classList.add('open');
-
-setStatus('Étape 2/3 — Écriture du scénario…');
-state.script=await generateScript(state.selectedNews,state.palette);
-renderScript();
-$('section-script').classList.remove('hidden');$('section-script').classList.add('open');
-
-setStatus('Étape 3/3 — Génération des vidéos…');
-const scenes=state.script.scenes.slice(0,SCENE_COUNT);
-state.videos=scenes.map(s=>({status:'pending',url:null,progress:'En attente…',type:s.type}));
-renderVideos();
-$('section-videos').classList.remove('hidden');$('section-videos').classList.add('open');
-
-for(let i=0;i<scenes.length;i++){
-if(state.stopRequested)break;
-const scene=scenes[i];
-state.videos[i].status='loading';state.videos[i].progress='Initialisation…';
-renderVideos();
-setStatus('Vidéo '+(i+1)+'/'+scenes.length);
-
-try {
-const prompt = buildVideoPrompt(scene, state.script, state.palette);
-
-// On génère TOUJOURS l'image d'abord (pour éviter l'erreur 500)
-const imgPrompt = 'Pastel fairy-tale keyframe, cute kawaii kitten with cape and wizard hat, ' + (scene.decor || 'pastel studio') + ', 35mm film grain, pastel palette ' + state.palette.colors.join(', ');
-const imgUrl = await generateImage(imgPrompt);
-
-// Ensuite on crée la vidéo avec l'image
-const videoId = await createVideoTask(prompt, imgUrl);
-
-// Lancement du polling
-const url = await pollVideo(videoId, (p) => { state.videos[i].progress = p; renderVideos() });
-
-state.videos[i]={status:'done',url,progress:'Terminé',type:scene.type};
-renderVideos();
-showToast('Scène '+(i+1)+' prête !','success');
-} catch(e) {
-if(e.message==='Arrêt')break;
-state.videos[i]={status:'error',progress:'Échec',error:e.message,type:scene.type};
-renderVideos();
-}
-await sleep(3000);
-}
-
-setStatus('Conte terminé ✦');
-$('section-player').classList.remove('hidden');$('section-player').classList.add('open');
-setTimeout(()=>setStatus(null),3000);
-showToast('Conte prêt !','success');
-}catch(e){
-setStatus('Erreur : '+e.message.slice(0,60));
-showToast('Erreur : '+e.message.slice(0,60),'error');
-setTimeout(()=>setStatus(null),3000);
-}
-
-state.isRunning=false;state.stopRequested=false;
-updateButtons();
-}
-
-let ttsVoice=null;
-function initTTS(){
-if(!('speechSynthesis' in window))return;
-const pick=()=>{
-const voices=speechSynthesis.getVoices();
-const fr=voices.filter(v=>v.lang&&v.lang.startsWith('fr'));
-ttsVoice=fr.find(v=>/amelie|marie|audrey/i.test(v.name))||fr[0]||null;
-};
-pick();speechSynthesis.onvoiceschanged=pick;
-}
-function speak(text){
-if(!state.voiceEnabled||!ttsVoice)return;
-try{
-speechSynthesis.cancel();
-const u=new SpeechSynthesisUtterance(text);
-u.lang='fr-FR';u.rate=0.9;u.pitch=1.3;
-if(ttsVoice)u.voice=ttsVoice;
-speechSynthesis.speak(u);
-}catch(e){}
-}
-function stopTTS(){try{speechSynthesis.cancel()}catch(e){}}
-
-function playOneScene(videoObj,scene,ctx,canvas){
-return new Promise((resolve)=>{
-const video=document.createElement('video');
-video.src=videoObj.url;video.playsInline=true;video.muted=true;
-let ttsFired=false,finished=false;
-const finish=()=>{if(finished)return;finished=true;resolve()};
-const startTTS=()=>{if(ttsFired)return;ttsFired=true;const l=scene.dialogue&&scene.dialogue.line_fr;if(l)speak(l)};
-const guard=setTimeout(startTTS,2000);
-const draw=()=>{
-ctx.fillStyle='#1a1008';ctx.fillRect(0,0,canvas.width,canvas.height);
-const vw=video.videoWidth||1280,vh=video.videoHeight||720;
-const ar=vw/vh,car=canvas.width/canvas.height;
-let dw,dh,dx,dy;
-if(ar>car){dw=canvas.width;dh=canvas.width/ar;dx=0;dy=(canvas.height-dh)/2}
-else{dh=canvas.height;dw=canvas.height*ar;dx=(canvas.width-dw)/2;dy=0}
-try{ctx.drawImage(video,dx,dy,dw,dh)}catch(e){}
-};
-const loop=()=>{
-if(!state.isPlayingFilm||video.paused||video.ended){clearTimeout(guard);finish();return}
-draw();state.playRAF=requestAnimationFrame(loop);
-};
-video.onloadedmetadata=()=>{clearTimeout(guard);startTTS();video.play().then(loop).catch(()=>{startTTS();finish()})};
-video.oncanplay=startTTS;
-video.onended=()=>{clearTimeout(guard);finish()};
-video.onerror=()=>{startTTS();clearTimeout(guard);finish()};
-video.load();
-});
-}
-
-async function playFilm(){
-const ready=state.videos.filter(v=>v.status==='done'&&v.url);
-if(!ready.length){showToast('Aucune vidéo à diffuser','error');return}
-if(state.isPlayingFilm)return;
-state.isPlayingFilm=true;updateButtons();
-const overlay=$('player-overlay');
-const canvas=$('player-canvas');
-if(!overlay||!canvas)return;
-overlay.classList.add('visible');
-const ctx=canvas.getContext('2d');
-canvas.width=window.innerWidth*Math.min(window.devicePixelRatio||1,2);
-canvas.height=window.innerHeight*Math.min(window.devicePixelRatio||1,2);
-canvas.style.width='100vw';canvas.style.height='100vh';
-const scenes=state.script.scenes||[];
-const readyWithScene=ready.map(v=>({video:v,scene:scenes[state.videos.indexOf(v)]||{}}));
-for(let i=0;i<readyWithScene.length;i++){
-if(!state.isPlayingFilm)break;
-await playOneScene(readyWithScene[i].video,readyWithScene[i].scene,ctx,canvas);
-}
-stopPlayback();
-}
-
-function stopPlayback(){
-state.isPlayingFilm=false;
-if(state.playRAF)cancelAnimationFrame(state.playRAF);
-state.playRAF=null;stopTTS();
-const o=$('player-overlay');if(o)o.classList.remove('visible');
-updateButtons();
-}
-
-document.addEventListener('DOMContentLoaded',function(){
-$('api-save-btn').addEventListener('click',function(e){e.preventDefault();saveKeys()});
-$('launch-btn').addEventListener('click',runConte);
-$('stop-btn').addEventListener('click',function(){state.stopRequested=true;stopTTS();setStatus('Arrêt en cours…')});
-$('play-film-btn').addEventListener('click',playFilm);
-$('voice-toggle').addEventListener('change',function(e){state.voiceEnabled=e.target.checked;if(!state.voiceEnabled)stopTTS()});
-document.querySelectorAll('[data-toggle]').forEach(function(h){
-h.addEventListener('click',function(){$(h.dataset.toggle).classList.toggle('open')});
-});
-const ov=$('player-overlay');
-if(ov)ov.addEventListener('click',stopPlayback);
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&state.isPlayingFilm)stopPlayback()});
-initTTS();
-updateApiPanel();
-updateButtons();
-});
 </script>
 </body>
 </html>
