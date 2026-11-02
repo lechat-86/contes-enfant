@@ -469,3 +469,101 @@ updateButtons();
 let ttsVoice=null;
 function initTTS(){
 if(!('speechSynthesis' in window))return;
+const pick=()=>{
+const voices=speechSynthesis.getVoices();
+const fr=voices.filter(v=>v.lang&&v.lang.startsWith('fr'));
+ttsVoice=fr.find(v=>/amelie|marie|audrey/i.test(v.name))||fr[0]||null;
+};
+pick();speechSynthesis.onvoiceschanged=pick;
+}
+function speak(text){
+if(!state.voiceEnabled||!ttsVoice)return;
+try{
+speechSynthesis.cancel();
+const u=new SpeechSynthesisUtterance(text);
+u.lang='fr-FR';u.rate=0.9;u.pitch=1.3;
+if(ttsVoice)u.voice=ttsVoice;
+speechSynthesis.speak(u);
+}catch(e){}
+}
+function stopTTS(){try{speechSynthesis.cancel()}catch(e){}}
+
+function playOneScene(videoObj,scene,ctx,canvas){
+return new Promise((resolve)=>{
+const video=document.createElement('video');
+video.src=videoObj.url;video.playsInline=true;video.muted=true;
+let ttsFired=false,finished=false;
+const finish=()=>{if(finished)return;finished=true;resolve()};
+const startTTS=()=>{if(ttsFired)return;ttsFired=true;const l=scene.dialogue&&scene.dialogue.line_fr;if(l)speak(l)};
+const guard=setTimeout(startTTS,2000);
+const draw=()=>{
+ctx.fillStyle='#1a1008';ctx.fillRect(0,0,canvas.width,canvas.height);
+const vw=video.videoWidth||1280,vh=video.videoHeight||720;
+const ar=vw/vh,car=canvas.width/canvas.height;
+let dw,dh,dx,dy;
+if(ar>car){dw=canvas.width;dh=canvas.width/ar;dx=0;dy=(canvas.height-dh)/2}
+else{dh=canvas.height;dw=canvas.height*ar;dx=(canvas.width-dw)/2;dy=0}
+try{ctx.drawImage(video,dx,dy,dw,dh)}catch(e){}
+};
+const loop=()=>{
+if(!state.isPlayingFilm||video.paused||video.ended){clearTimeout(guard);finish();return}
+draw();state.playRAF=requestAnimationFrame(loop);
+};
+video.onloadedmetadata=()=>{clearTimeout(guard);startTTS();video.play().then(loop).catch(()=>{startTTS();finish()})};
+video.oncanplay=startTTS;
+video.onended=()=>{clearTimeout(guard);finish()};
+video.onerror=()=>{startTTS();clearTimeout(guard);finish()};
+video.load();
+});
+}
+
+async function playFilm(){
+const ready=state.videos.filter(v=>v.status==='done'&&v.url);
+if(!ready.length){showToast('Aucune vidéo à diffuser','error');return}
+if(state.isPlayingFilm)return;
+state.isPlayingFilm=true;updateButtons();
+const overlay=$('player-overlay');
+const canvas=$('player-canvas');
+if(!overlay||!canvas)return;
+overlay.classList.add('visible');
+const ctx=canvas.getContext('2d');
+canvas.width=window.innerWidth*Math.min(window.devicePixelRatio||1,2);
+canvas.height=window.innerHeight*Math.min(window.devicePixelRatio||1,2);
+canvas.style.width='100vw';canvas.style.height='100vh';
+const scenes=state.script.scenes||[];
+const readyWithScene=ready.map(v=>({video:v,scene:scenes[state.videos.indexOf(v)]||{}}));
+for(let i=0;i<readyWithScene.length;i++){
+if(!state.isPlayingFilm)break;
+await playOneScene(readyWithScene[i].video,readyWithScene[i].scene,ctx,canvas);
+}
+stopPlayback();
+}
+
+function stopPlayback(){
+state.isPlayingFilm=false;
+if(state.playRAF)cancelAnimationFrame(state.playRAF);
+state.playRAF=null;stopTTS();
+const o=$('player-overlay');if(o)o.classList.remove('visible');
+updateButtons();
+}
+
+// INIT
+document.addEventListener('DOMContentLoaded',function(){
+$('api-save-btn').addEventListener('click',function(e){e.preventDefault();saveKeys()});
+$('launch-btn').addEventListener('click',runConte);
+$('stop-btn').addEventListener('click',function(){state.stopRequested=true;stopTTS();setStatus('Arrêt en cours…')});
+$('play-film-btn').addEventListener('click',playFilm);
+$('voice-toggle').addEventListener('change',function(e){state.voiceEnabled=e.target.checked;if(!state.voiceEnabled)stopTTS()});
+document.querySelectorAll('[data-toggle]').forEach(function(h){
+h.addEventListener('click',function(){$(h.dataset.toggle).classList.toggle('open')});
+});
+const ov=$('player-overlay');
+if(ov)ov.addEventListener('click',stopPlayback);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&state.isPlayingFilm)stopPlayback()});
+initTTS();
+updateApiPanel();
+updateButtons();
+});
+</script>
+</body>
+</html>
