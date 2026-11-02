@@ -549,7 +549,7 @@ updateButtons();
 
 // INIT
 document.addEventListener('DOMContentLoaded',function(){
-$('api-save-btn').addEventListener('click',function(e){e.preventDefault();saveKeys()});
+$('api-save-btn').addEventListener('click',function(e){e.preventDefault();saveKeys(); });
 $('launch-btn').addEventListener('click',runConte);
 $('stop-btn').addEventListener('click',function(){state.stopRequested=true;stopTTS();setStatus('Arrêt en cours…')});
 $('play-film-btn').addEventListener('click',playFilm);
