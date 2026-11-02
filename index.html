@@ -433,13 +433,12 @@ setStatus('Vidéo '+(i+1)+'/'+scenes.length);
 try{
 const prompt=buildVideoPrompt(scene,state.script,state.palette);
 let videoId;
-try{
-videoId=await createVideoTask(prompt,null);
-}catch(e){
-const imgPrompt='Pastel fairy-tale keyframe, cute kawaii kitten with cape and wizard hat, '+(scene.decor||'pastel studio')+', 35mm film grain, pastel palette '+state.palette.colors.join(', ');
-const imgUrl=await generateImage(imgPrompt);
-videoId=await createVideoTask(prompt,imgUrl);
-}
+// On génère TOUJOURS l'image d'abord (pour éviter l'erreur 500)
+const imgPrompt = 'Pastel fairy-tale keyframe, cute kawaii kitten with cape and wizard hat, ' + (scene.decor || 'pastel studio') + ', 35mm film grain, pastel palette ' + state.palette.colors.join(', ');
+const imgUrl = await generateImage(imgPrompt);
+
+// Ensuite on crée la vidéo avec l'image
+const videoId = await createVideoTask(prompt, imgUrl);
 const url=await pollVideo(videoId,(p)=>{state.videos[i].progress=p;renderVideos()});
 state.videos[i]={status:'done',url,progress:'Terminé',type:scene.type};
 renderVideos();
