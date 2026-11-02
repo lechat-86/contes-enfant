@@ -496,3 +496,19 @@ function speak(text){
   try{
     speechSynthesis.cancel();
     const u=new SpeechSynthesisUtter
+    // ══════════════════════════════════════════════════════════════
+// CORRECTIF : bouton "Enregistrer les clés"
+// ══════════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+const saveBtn = document.getElementById('api-save-btn');
+if (saveBtn) {
+saveBtn.addEventListener('click', function(e) {
+e.preventDefault();
+saveKeys();
+});
+}
+
+// Recharger l'état au démarrage
+updateApiPanel();
+updateButtons();
+});
