@@ -241,7 +241,8 @@ return item.url||('data:image/png;base64,'+item.b64_json);
 
 async function createVideoTask(prompt,imageUrl){
 const body={model:MODEL_VIDEO,prompt,num_frames:SCENE_FRAMES,frame_rate:FRAME_RATE};
-if(imageUrl)body.image=imageUrl;
+if(imageUrl) body.image = imageUrl;
+
 const res=await apiFetch(API_BASE+'/videos',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
 const data=await res.json();
 const id=data.video_id||data.id||data.task_id;
@@ -430,20 +431,24 @@ const scene=scenes[i];
 state.videos[i].status='loading';state.videos[i].progress='Initialisation…';
 renderVideos();
 setStatus('Vidéo '+(i+1)+'/'+scenes.length);
-try{
-const prompt=buildVideoPrompt(scene,state.script,state.palette);
-let videoId;
+
+try {
+const prompt = buildVideoPrompt(scene, state.script, state.palette);
+
 // On génère TOUJOURS l'image d'abord (pour éviter l'erreur 500)
 const imgPrompt = 'Pastel fairy-tale keyframe, cute kawaii kitten with cape and wizard hat, ' + (scene.decor || 'pastel studio') + ', 35mm film grain, pastel palette ' + state.palette.colors.join(', ');
 const imgUrl = await generateImage(imgPrompt);
 
 // Ensuite on crée la vidéo avec l'image
 const videoId = await createVideoTask(prompt, imgUrl);
-const url=await pollVideo(videoId,(p)=>{state.videos[i].progress=p;renderVideos()});
+
+// Lancement du polling
+const url = await pollVideo(videoId, (p) => { state.videos[i].progress = p; renderVideos() });
+
 state.videos[i]={status:'done',url,progress:'Terminé',type:scene.type};
 renderVideos();
 showToast('Scène '+(i+1)+' prête !','success');
-}catch(e){
+} catch(e) {
 if(e.message==='Arrêt')break;
 state.videos[i]={status:'error',progress:'Échec',error:e.message,type:scene.type};
 renderVideos();
@@ -546,9 +551,8 @@ const o=$('player-overlay');if(o)o.classList.remove('visible');
 updateButtons();
 }
 
-// INIT
 document.addEventListener('DOMContentLoaded',function(){
-$('api-save-btn').addEventListener('click',function(e){e.preventDefault();saveKeys(); });
+$('api-save-btn').addEventListener('click',function(e){e.preventDefault();saveKeys()});
 $('launch-btn').addEventListener('click',runConte);
 $('stop-btn').addEventListener('click',function(){state.stopRequested=true;stopTTS();setStatus('Arrêt en cours…')});
 $('play-film-btn').addEventListener('click',playFilm);
